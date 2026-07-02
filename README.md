@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TickTock Timesheet App
 
-## Getting Started
+TickTock is a Next.js timesheet management app with a credentials login flow and a reusable timesheet experience for viewing weekly summaries and managing daily entries.
 
-First, run the development server:
+## What this project does
+
+- Lets a user sign in with a credentials-based auth flow
+- Redirects authenticated users to the timesheet area
+- Shows a timesheet list with filters and pagination
+- Opens a weekly detail view for entries inside a selected week
+- Supports adding, editing, and deleting tasks from the week detail page
+- Uses local Next.js API routes to power the timesheet data flow
+
+## Tech Stack
+
+- **Next.js 16** with the App Router
+- **React 19**
+- **TypeScript**
+- **NextAuth.js** for authentication
+- **Tailwind CSS 4** for styling
+- **Lucide React** for icons
+- **react-hook-form** and **zod** are available in the project dependencies
+
+## Key Features
+
+### Authentication
+
+- Credentials login using NextAuth
+- Session-based protected routes
+- Redirects to `/login` when unauthenticated
+
+### Timesheet List
+
+- Route: `/timesheet`
+- Displays weekly timesheet rows
+- Status logic:
+  - `completed` = 40 hours
+  - `incomplete` = less than 40 hours but greater than 0
+  - `missing` = no hours added
+- Filter by date range
+- Filter by status
+- Pagination controls
+
+### Week Detail
+
+- Route: `/timesheet/[week]`
+- Shows the selected week summary
+- Groups entries by day
+- Three-dot menu actions:
+  - Edit
+  - Delete
+- Add new entry modal
+
+### API Layer
+
+The timesheet data is served through local Next.js API routes instead of hardcoded UI-only data.
+
+Available routes:
+
+- `GET /api/timesheets`
+- `GET /api/timesheets/[week]`
+- `POST /api/timesheets/[week]`
+- `PUT /api/timesheets/[week]/entries/[entryId]`
+- `DELETE /api/timesheets/[week]/entries/[entryId]`
+
+## Project Structure
+
+- `src/app/page.tsx` - redirects users to the login page
+- `src/app/login/page.tsx` - login screen
+- `src/app/timesheet/page.tsx` - timesheet list screen
+- `src/app/timesheet/[week]/page.tsx` - weekly timesheet detail screen
+- `src/app/api/auth/[...nextauth]/route.ts` - NextAuth handler
+- `src/app/api/timesheets/*` - local timesheet API routes
+- `src/lib/authOptions.ts` - auth configuration
+- `src/lib/timesheetStore.ts` - in-memory timesheet data store and helpers
+- `src/components/SessionProvider.tsx` - session provider wrapper
+
+## Local Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Available Scripts
 
-## Learn More
+- `npm run dev` - start the development server
+- `npm run build` - build the app for production
+- `npm run start` - start the production server
+- `npm run lint` - run ESLint
 
-To learn more about Next.js, take a look at the following resources:
+## Default Login
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Use these credentials to sign in during local development:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Email: `admin@ticktock.com`
+- Password: `Password123!`
 
-## Deploy on Vercel
+## Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- The timesheet data is currently stored in memory through the local API layer, so it resets when the server restarts.
+- The app is currently optimized around the requested UI and route structure for the timesheet workflow.
+- Test files and test configuration were removed because the project no longer uses a test workflow.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Build Check
+
+The app currently passes:
+
+- lint
+- production build
+
+## Future Improvements
+
+- Add persistent storage for timesheet entries
+- Add API validation and error handling UI states
+- Add automated tests again if the project needs them later
+
