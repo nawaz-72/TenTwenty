@@ -1,26 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  
+  /* Premium brand colors derived from Figma design */
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-500: #2563eb;
+  --color-brand-600: #1d4ed8;
+  --color-brand-700: #1e40af;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+  
+  /* Alert & Status styling colors */
+  --color-status-approved-bg: #f0fdf4;
+  --color-status-approved-text: #166534;
+  --color-status-approved-border: #bbf7d0;
+
+  --color-status-pending-bg: #fef9c3;
+  --color-status-pending-text: #854d0e;
+  --color-status-pending-border: #fef08a;
+
+  --color-status-draft-bg: #f1f5f9;
+  --color-status-draft-text: #475569;
+  --color-status-draft-border: #e2e8f0;
+
+  --color-status-rejected-bg: #fef2f2;
+  --color-status-rejected-text: #991b1b;
+  --color-status-rejected-border: #fecaca;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #f8fafc;
+  --foreground: #0f172a;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Chrome, Safari, Edge, Opera number input controls hidden */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox number input controls hidden */
+input[type=number] {
+  -moz-appearance: textfield;
 }
